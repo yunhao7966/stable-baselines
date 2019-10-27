@@ -1,10 +1,3 @@
-import os
-from collections import deque
-
-import numpy as np
-import tensorflow as tf
-
-
 def discount_with_dones(rewards, dones, gamma):
     """
     Apply the discount value to the reward, where the environment is not done
@@ -20,13 +13,3 @@ def discount_with_dones(rewards, dones, gamma):
         ret = reward + gamma * ret * (1. - done)  # fixed off by one bug
         discounted.append(ret)
     return discounted[::-1]
-
-
-def make_path(path):
-    """
-    For a given path, create the folders if they do not exist
-
-    :param path: (str) The path
-    :return: (bool) Whether or not it finished correctly
-    """
-    return os.makedirs(path, exist_ok=True)
