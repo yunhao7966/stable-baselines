@@ -11,7 +11,7 @@ from stable_baselines.common.vec_env import VecEnv
 from stable_baselines.common.tf_util import total_episode_reward_logger
 from stable_baselines.common.math_util import safe_mean
 from stable_baselines.common.schedules import get_schedule_fn
-from stable_baselines.deepq.replay_buffer import ReplayBuffer
+from stable_baselines.common.replay_buffer import ReplayBuffer
 from stable_baselines.sac.sac import get_vars
 from stable_baselines.td3.policies import TD3Policy
 from stable_baselines import logger

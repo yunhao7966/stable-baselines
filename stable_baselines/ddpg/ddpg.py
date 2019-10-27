@@ -16,9 +16,9 @@ from stable_baselines.common import tf_util, OffPolicyRLModel, SetVerbosity, Ten
 from stable_baselines.common.vec_env import VecEnv
 from stable_baselines.common.mpi_adam import MpiAdam
 from stable_baselines.common.tf_util import total_episode_reward_logger
-from stable_baselines.ddpg.policies import DDPGPolicy
+from stable_baselines.common.replay_buffer import ReplayBuffer
 from stable_baselines.common.mpi_running_mean_std import RunningMeanStd
-from stable_baselines.deepq.replay_buffer import ReplayBuffer
+from stable_baselines.ddpg.policies import DDPGPolicy
 
 
 def normalize(tensor, stats):
