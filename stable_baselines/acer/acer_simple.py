@@ -8,11 +8,28 @@ from stable_baselines import logger
 from stable_baselines.common.schedules import Scheduler
 from stable_baselines.common.tf_util import batch_to_seq, seq_to_batch, \
     check_shape, avg_norm, gradient_add, q_explained_variance, total_episode_reward_logger
-from stable_baselines.a2c.utils import EpisodeStats, get_by_index
+from stable_baselines.a2c.utils import EpisodeStats
 from stable_baselines.acer.buffer import Buffer
 from stable_baselines.common import ActorCriticRLModel, tf_util, SetVerbosity, TensorboardWriter
 from stable_baselines.common.runners import AbstractEnvRunner
 from stable_baselines.common.policies import ActorCriticPolicy, RecurrentActorCriticPolicy
+
+
+# For ACER
+def get_by_index(input_tensor, idx):
+    """
+    Return the input tensor, offset by a certain value
+
+    :param input_tensor: (TensorFlow Tensor) The input tensor
+    :param idx: (int) The index offset
+    :return: (TensorFlow Tensor) the offset tensor
+    """
+    assert len(input_tensor.get_shape()) == 2
+    assert len(idx.get_shape()) == 1
+    idx_flattened = tf.range(0, input_tensor.shape[0]) * input_tensor.shape[1] + idx
+    offset_tensor = tf.gather(tf.reshape(input_tensor, [-1]),  # flatten input
+                              idx_flattened)  # use flattened indices
+    return offset_tensor
 
 
 def strip(var, n_envs, n_steps, flat=False):

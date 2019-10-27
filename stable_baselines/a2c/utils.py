@@ -88,20 +88,3 @@ class EpisodeStats:
             return np.mean(self.rewbuffer)
         else:
             return 0
-
-
-# For ACER
-def get_by_index(input_tensor, idx):
-    """
-    Return the input tensor, offset by a certain value
-
-    :param input_tensor: (TensorFlow Tensor) The input tensor
-    :param idx: (int) The index offset
-    :return: (TensorFlow Tensor) the offset tensor
-    """
-    assert len(input_tensor.get_shape()) == 2
-    assert len(idx.get_shape()) == 1
-    idx_flattened = tf.range(0, input_tensor.shape[0]) * input_tensor.shape[1] + idx
-    offset_tensor = tf.gather(tf.reshape(input_tensor, [-1]),  # flatten input
-                              idx_flattened)  # use flattened indices
-    return offset_tensor
