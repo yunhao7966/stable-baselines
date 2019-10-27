@@ -184,41 +184,6 @@ SCHEDULES = {
     'double_middle_drop': double_middle_drop
 }
 
-
-class Scheduler(object):
-    def __init__(self, initial_value, n_values, schedule):
-        """
-        Update a value every iteration, with a specific curve
-
-        :param initial_value: (float) initial value
-        :param n_values: (int) the total number of iterations
-        :param schedule: (function) the curve you wish to follow for your value
-        """
-        self.step = 0.
-        self.initial_value = initial_value
-        self.nvalues = n_values
-        self.schedule = SCHEDULES[schedule]
-
-    def value(self):
-        """
-        Update the Scheduler, and return the current value
-
-        :return: (float) the current value
-        """
-        current_value = self.initial_value * self.schedule(self.step / self.nvalues)
-        self.step += 1.
-        return current_value
-
-    def value_steps(self, steps):
-        """
-        Get a value for a given step
-
-        :param steps: (int) The current number of iterations
-        :return: (float) the value for the current number of iterations
-        """
-        return self.initial_value * self.schedule(steps / self.nvalues)
-
-
 class EpisodeStats:
     def __init__(self, n_steps, n_envs):
         """

@@ -106,3 +106,40 @@ class LinearSchedule(Schedule):
     def value(self, step):
         fraction = min(float(step) / self.schedule_timesteps, 1.0)
         return self.initial_p + fraction * (self.final_p - self.initial_p)
+
+
+class Scheduler(object):
+    def __init__(self, initial_value, n_values, schedule):
+        """
+        Update a value every iteration, with a specific curve.
+
+        This is a legacy version of schedules, originally defined
+        in a2c/utils.py. Used by A2C, ACER and ACKTR algorithms.
+
+        :param initial_value: (float) initial value
+        :param n_values: (int) the total number of iterations
+        :param schedule: (function) the curve you wish to follow for your value
+        """
+        self.step = 0.
+        self.initial_value = initial_value
+        self.nvalues = n_values
+        self.schedule = SCHEDULES[schedule]
+
+    def value(self):
+        """
+        Update the Scheduler, and return the current value
+
+        :return: (float) the current value
+        """
+        current_value = self.initial_value * self.schedule(self.step / self.nvalues)
+        self.step += 1.
+        return current_value
+
+    def value_steps(self, steps):
+        """
+        Get a value for a given step
+
+        :param steps: (int) The current number of iterations
+        :return: (float) the value for the current number of iterations
+        """
+        return self.initial_value * self.schedule(steps / self.nvalues)

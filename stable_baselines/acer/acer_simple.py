@@ -5,7 +5,8 @@ import tensorflow as tf
 from gym.spaces import Discrete, Box
 
 from stable_baselines import logger
-from stable_baselines.a2c.utils import batch_to_seq, seq_to_batch, Scheduler, EpisodeStats, \
+from stable_baselines.common.schedules import Scheduler
+from stable_baselines.a2c.utils import batch_to_seq, seq_to_batch, EpisodeStats, \
     get_by_index, check_shape, avg_norm, gradient_add, q_explained_variance, total_episode_reward_logger
 from stable_baselines.acer.buffer import Buffer
 from stable_baselines.common import ActorCriticRLModel, tf_util, SetVerbosity, TensorboardWriter
