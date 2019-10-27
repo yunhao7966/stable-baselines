@@ -11,8 +11,8 @@ from stable_baselines.common.policies import ActorCriticPolicy, RecurrentActorCr
 from stable_baselines.common.runners import AbstractEnvRunner
 from stable_baselines.common.schedules import Scheduler
 from stable_baselines.common.tf_util import mse, total_episode_reward_logger
+from stable_baselines.common.math_util import safe_mean
 from stable_baselines.a2c.utils import discount_with_dones
-from stable_baselines.ppo2.ppo2 import safe_mean
 
 class A2C(ActorCriticRLModel):
     """

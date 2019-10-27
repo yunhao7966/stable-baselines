@@ -14,7 +14,7 @@ from stable_baselines.acktr import kfac
 from stable_baselines.common.schedules import Scheduler
 from stable_baselines.common import explained_variance, ActorCriticRLModel, tf_util, SetVerbosity, TensorboardWriter
 from stable_baselines.common.policies import ActorCriticPolicy, RecurrentActorCriticPolicy
-from stable_baselines.ppo2.ppo2 import safe_mean
+from stable_baselines.common.math_util import safe_mean
 
 
 class ACKTR(ActorCriticRLModel):

@@ -108,6 +108,39 @@ class LinearSchedule(Schedule):
         return self.initial_p + fraction * (self.final_p - self.initial_p)
 
 
+def get_schedule_fn(value_schedule):
+    """
+    Transform (if needed) learning rate and clip range
+    to callable.
+
+    :param value_schedule: (callable or float)
+    :return: (function)
+    """
+    # If the passed schedule is a float
+    # create a constant function
+    if isinstance(value_schedule, (float, int)):
+        # Cast to float to avoid errors
+        value_schedule = constfn(float(value_schedule))
+    else:
+        assert callable(value_schedule)
+    return value_schedule
+
+
+def constfn(val):
+    """
+    Create a function that returns a constant
+    It is useful for learning rate schedule (to avoid code duplication)
+
+    :param val: (float)
+    :return: (function)
+    """
+
+    def func(_):
+        return val
+
+    return func
+
+
 # ================================================================
 # Legacy scheduler used by A2C, AKCTR and ACER
 # ================================================================
