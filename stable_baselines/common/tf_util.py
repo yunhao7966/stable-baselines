@@ -114,16 +114,6 @@ def calc_entropy(logits):
     return tf.reduce_sum(p_0 * (tf.log(z_0) - a_0), 1)
 
 
-def calc_entropy_softmax(action_proba):
-    """
-    Calculates the softmax entropy of the output values of the network
-
-    :param action_proba: (TensorFlow Tensor) The input probability for each action
-    :return: (TensorFlow Tensor) The softmax entropy of the output values of the network
-    """
-    return - tf.reduce_sum(action_proba * tf.log(action_proba + 1e-6), axis=1)
-
-
 def mse(pred, target):
     """
     Returns the Mean squared error between prediction and target
