@@ -12,7 +12,6 @@ from stable_baselines.common.tf_util import total_episode_reward_logger
 from stable_baselines.common.math_util import safe_mean
 from stable_baselines.common.schedules import get_schedule_fn
 from stable_baselines.common.replay_buffer import ReplayBuffer
-from stable_baselines.sac.sac import get_vars
 from stable_baselines.td3.policies import TD3Policy
 from stable_baselines import logger
 
@@ -197,16 +196,16 @@ class TD3(OffPolicyRLModel):
                     # will be called only every n training steps,
                     # where n is the policy delay
                     policy_optimizer = tf.train.AdamOptimizer(learning_rate=self.learning_rate_ph)
-                    policy_train_op = policy_optimizer.minimize(policy_loss, var_list=get_vars('model/pi'))
+                    policy_train_op = policy_optimizer.minimize(policy_loss, var_list=tf_util.get_trainable_vars('model/pi'))
                     self.policy_train_op = policy_train_op
 
                     # Q Values optimizer
                     qvalues_optimizer = tf.train.AdamOptimizer(learning_rate=self.learning_rate_ph)
-                    qvalues_params = get_vars('model/values_fn/')
+                    qvalues_params = tf_util.get_trainable_vars('model/values_fn/')
 
                     # Q Values and policy target params
-                    source_params = get_vars("model/")
-                    target_params = get_vars("target/")
+                    source_params = tf_util.get_trainable_vars("model/")
+                    target_params = tf_util.get_trainable_vars("target/")
 
                     # Polyak averaging for target variables
                     self.target_ops = [
@@ -234,8 +233,8 @@ class TD3(OffPolicyRLModel):
                     tf.summary.scalar('learning_rate', tf.reduce_mean(self.learning_rate_ph))
 
                 # Retrieve parameters that must be saved
-                self.params = get_vars("model")
-                self.target_params = get_vars("target/")
+                self.params = tf_util.get_trainable_vars("model")
+                self.target_params = tf_util.get_trainable_vars("target/")
 
                 # Initialize Variables and target network
                 with self.sess.as_default():

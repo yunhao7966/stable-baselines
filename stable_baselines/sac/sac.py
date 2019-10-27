@@ -16,16 +16,6 @@ from stable_baselines.sac.policies import SACPolicy
 from stable_baselines import logger
 
 
-def get_vars(scope):
-    """
-    Alias for get_trainable_vars
-
-    :param scope: (str)
-    :return: [tf Variable]
-    """
-    return tf_util.get_trainable_vars(scope)
-
-
 class SAC(OffPolicyRLModel):
     """
     Soft Actor-Critic (SAC)
@@ -267,14 +257,14 @@ class SAC(OffPolicyRLModel):
                     # Policy train op
                     # (has to be separate from value train op, because min_qf_pi appears in policy_loss)
                     policy_optimizer = tf.train.AdamOptimizer(learning_rate=self.learning_rate_ph)
-                    policy_train_op = policy_optimizer.minimize(policy_loss, var_list=get_vars('model/pi'))
+                    policy_train_op = policy_optimizer.minimize(policy_loss, var_list=tf_util.get_trainable_vars('model/pi'))
 
                     # Value train op
                     value_optimizer = tf.train.AdamOptimizer(learning_rate=self.learning_rate_ph)
-                    values_params = get_vars('model/values_fn')
+                    values_params = tf_util.get_trainable_vars('model/values_fn')
 
-                    source_params = get_vars("model/values_fn/vf")
-                    target_params = get_vars("target/values_fn/vf")
+                    source_params = tf_util.get_trainable_vars("model/values_fn/vf")
+                    target_params = tf_util.get_trainable_vars("target/values_fn/vf")
 
                     # Polyak averaging for target variables
                     self.target_update_op = [
@@ -318,8 +308,8 @@ class SAC(OffPolicyRLModel):
                     tf.summary.scalar('learning_rate', tf.reduce_mean(self.learning_rate_ph))
 
                 # Retrieve parameters that must be saved
-                self.params = get_vars("model")
-                self.target_params = get_vars("target/values_fn/vf")
+                self.params = tf_util.get_trainable_vars("model")
+                self.target_params = tf_util.get_trainable_vars("target/values_fn/vf")
 
                 # Initialize Variables and target network
                 with self.sess.as_default():
