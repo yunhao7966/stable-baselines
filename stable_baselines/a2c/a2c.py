@@ -10,8 +10,8 @@ from stable_baselines.common import explained_variance, tf_util, ActorCriticRLMo
 from stable_baselines.common.policies import ActorCriticPolicy, RecurrentActorCriticPolicy
 from stable_baselines.common.runners import AbstractEnvRunner
 from stable_baselines.common.schedules import Scheduler
-from stable_baselines.a2c.utils import discount_with_dones, mse, \
-    total_episode_reward_logger
+from stable_baselines.common.tf_util import mse
+from stable_baselines.a2c.utils import discount_with_dones, total_episode_reward_logger
 from stable_baselines.ppo2.ppo2 import safe_mean
 
 class A2C(ActorCriticRLModel):
