@@ -8,7 +8,6 @@ from stable_baselines import logger
 from stable_baselines.common.schedules import Scheduler
 from stable_baselines.common.tf_util import batch_to_seq, seq_to_batch, \
     check_shape, avg_norm, gradient_add, q_explained_variance, total_episode_reward_logger
-from stable_baselines.a2c.utils import EpisodeStats
 from stable_baselines.acer.buffer import Buffer
 from stable_baselines.common import ActorCriticRLModel, tf_util, SetVerbosity, TensorboardWriter
 from stable_baselines.common.runners import AbstractEnvRunner
@@ -76,6 +75,64 @@ def q_retrace(rewards, dones, q_i, values, rho_i, n_envs, n_steps, gamma):
     qrets = qrets[::-1]
     qret = seq_to_batch(qrets, flat=True)
     return qret
+
+
+class EpisodeStats:
+    def __init__(self, n_steps, n_envs):
+        """
+        Calculates the episode statistics
+
+        :param n_steps: (int) The number of steps to run for each environment
+        :param n_envs: (int) The number of environments
+        """
+        self.episode_rewards = []
+        for _ in range(n_envs):
+            self.episode_rewards.append([])
+        self.len_buffer = deque(maxlen=40)  # rolling buffer for episode lengths
+        self.rewbuffer = deque(maxlen=40)  # rolling buffer for episode rewards
+        self.n_steps = n_steps
+        self.n_envs = n_envs
+
+    def feed(self, rewards, masks):
+        """
+        Update the latest reward and mask
+
+        :param rewards: ([float]) The new rewards for the new step
+        :param masks: ([float]) The new masks for the new step
+        """
+        rewards = np.reshape(rewards, [self.n_envs, self.n_steps])
+        masks = np.reshape(masks, [self.n_envs, self.n_steps])
+        for i in range(0, self.n_envs):
+            for j in range(0, self.n_steps):
+                self.episode_rewards[i].append(rewards[i][j])
+                if masks[i][j]:
+                    reward_length = len(self.episode_rewards[i])
+                    reward_sum = sum(self.episode_rewards[i])
+                    self.len_buffer.append(reward_length)
+                    self.rewbuffer.append(reward_sum)
+                    self.episode_rewards[i] = []
+
+    def mean_length(self):
+        """
+        Returns the average length of each episode
+
+        :return: (float)
+        """
+        if self.len_buffer:
+            return np.mean(self.len_buffer)
+        else:
+            return 0  # on the first params dump, no episodes are finished
+
+    def mean_reward(self):
+        """
+        Returns the average reward of each episode
+
+        :return: (float)
+        """
+        if self.rewbuffer:
+            return np.mean(self.rewbuffer)
+        else:
+            return 0
 
 
 class ACER(ActorCriticRLModel):
