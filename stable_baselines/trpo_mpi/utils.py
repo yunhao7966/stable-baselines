@@ -149,13 +149,3 @@ def add_vtarg_and_adv(seg, gamma, lam):
         delta = rewards[step] + gamma * vpred[step + 1] * nonterminal - vpred[step]
         seg["adv"][step] = lastgaelam = delta + gamma * lam * nonterminal * lastgaelam
     seg["tdlamret"] = seg["adv"] + seg["vpred"]
-
-
-def flatten_lists(listoflists):
-    """
-    Flatten a python list of list
-
-    :param listoflists: (list(list))
-    :return: (list)
-    """
-    return [el for list_ in listoflists for el in list_]
