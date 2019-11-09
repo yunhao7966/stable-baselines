@@ -4,18 +4,72 @@
 Reinforcement Learning Tips and Tricks
 ======================================
 
+The aim of this section is to guide you for doing reinforcement learning experiments.
+It covers general advice about RL (where to start, which algorithm to choose, how to evaluate an algorithm, ...),
+as well as tips and tricks when using a custom environment or implementing an RL algorithm.
+
+
 General advice when using Reinforcement Learning
 ================================================
 
-What you should know:
+TL;DR
+-----
 
-- read about RL
-- read about Stable Baselines (we have a tutorial but you should read the doc anyway)
-- determinism and dependence to the seed
-- hyperparameter tuning -> look at the rl zoo before, or at the papers
-- sample efficiency
+1. Read about RL and Stable Baselines
+2. Do quantitative experiments and hyperparameter tuning if needed
+3. Evaluate the performance using a separate test env
+4. For better performances, augment the budget
+
+
+Like any other subject, if you want to work with RL, you should first read about it (we have a `ressource page <rl.html>`_ to get you started)
+to understand what you are using. We also recommend you to read Stable Baselines (SB) documentation and do the `tutorial <https://github.com/araffin/rl-tutorial-jnrr19>`_.
+It covers basic usage and guide you towards more advanced concepts of the library.
+
+Reinforcement Learning differs from other machine learning methods in different manners. One is that the data used to train the agent is collected
+through interactions with the environment by the agent itself (compared to supervised learning where you have a fixed dataset for instance).
+This dependence can lead to vicious circle: if the agent collects poor quality data (e.g., trajectories with no rewards), then it will not improve and continue to amass
+bad trajectories.
+
+This factor, among others, explains that results in RL may vary from one run to another (i.e., only the seed of the pseudo-random generator changes).
+That's why you should always do several runs to have quantitative results.
+
+Good results in RL are usually dependent on finding appropriate hyperparameters. Recent alogrithms (PPO, SAC, TD3) normally require little hyperparameter tuning
+but don't expect the default ones to work on any environment.
+
+We higly recommend you to take a look at the `RL zoo <https://github.com/araffin/rl-baselines-zoo>`_ (or the original papers) for tuned hyperparameters. Doing automatic hyperparameter optimization (included in the rl zoo)
+is also part of the best practices when applying an RL algorithm to a new problem.
+
+Model-free RL (i.e. all the algorithms implemented in SB) are usually sample inefficient. They require a lot of samples to learn something useful.
+As a general advice, to obtain better performances, you should augment the budget of the agent (number of training timesteps).
+How to make them more sample efficient? informative (shaped) reward, SRL, initialize with imitation learning,
+reduce the number of parameters (e.g. reduce the observation space, action space by constraining it).
+
+
 - normalization (VecNormalize for PPO2/A2C) and preprocessing (frame-stack, ...)
-- how to evaluate an agent? (separate test env + link to RL that matters)
+
+
+Current limitations:
+- sample efficiency
+- reward engineering (RewArt (credit to `Freek Stulp <http://www.freekstulp.net/>`_))
+- instability
+
+
+Only robotics:
+- jitterring during training (for robotics application)
+
+
+
+How to evaluate an RL algorithm?
+--------------------------------
+
+Evaluation methodology: use a test env, evaluate periodically the agent, and use deterministic agent to remove exploration noise.
+Looking at the training curve (episode reward function of the timesteps) is a good proxy but usually underestimate the agent true performance.
+
+`blog post <https://openlab-flowers.inria.fr/t/how-many-random-seeds-should-i-use-statistical-power-analysis-in-deep-reinforcement-learning-experiments/457>`_
+
+We suggest you reading `Deep Reinforcement Learning that Matters <https://arxiv.org/abs/1709.06560>`_ for a good discussion about RL evaluation.
+
+
 
 Which algorithm should I use?
 =============================
