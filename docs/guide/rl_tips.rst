@@ -39,24 +39,30 @@ but don't expect the default ones to work on any environment.
 We higly recommend you to take a look at the `RL zoo <https://github.com/araffin/rl-baselines-zoo>`_ (or the original papers) for tuned hyperparameters. Doing automatic hyperparameter optimization (included in the rl zoo)
 is also part of the best practices when applying an RL algorithm to a new problem.
 
-Model-free RL (i.e. all the algorithms implemented in SB) are usually sample inefficient. They require a lot of samples to learn something useful.
+You should normalize you input (VecNormalize for PPO2/A2C) and look at commmon preprocessing (e.g. for Atari, frame-stack, ...)
+
+
+Current Limitations of RL
+-------------------------
+
+You have to be aware of the current `limitations <https://www.alexirpan.com/2018/02/14/rl-hard.html>`_ of reinforcement learning.
+
+
+Model-free RL algorithms (i.e. all the algorithms implemented in SB) are usually *sample inefficient*. They require a lot of samples (sometimes millions) to learn something useful.
+That's why most of the successes in RL were achieved on games or in simulation only. For instance, in this `work <https://www.youtube.com/watch?v=aTDkYFZFWug>`_ by ETH Zurich, the ANYmal robot was trained in simulation only before being tested in the real world.
+
 As a general advice, to obtain better performances, you should augment the budget of the agent (number of training timesteps).
 How to make them more sample efficient? informative (shaped) reward, SRL, initialize with imitation learning,
 reduce the number of parameters (e.g. reduce the observation space, action space by constraining it).
 
 
-- normalization (VecNormalize for PPO2/A2C) and preprocessing (frame-stack, ...)
+In order to to achieved a desired behavior, expert knowledge is often required to design an adequate reward function.
+This *reward engineering* (or *RewArt* as coined by `Freek Stulp <http://www.freekstulp.net/>`_), necessitates several iterations. As a good example of reward shaping,
+you can take a look at `Deep Mimic <https://xbpeng.github.io/projects/DeepMimic/index.html>`_ which combines imitation learning and reinforcement learning to learn acrobatic moves.
 
-
-Current limitations:
-- sample efficiency
-- reward engineering (RewArt (credit to `Freek Stulp <http://www.freekstulp.net/>`_))
-- instability
-
-
-Only robotics:
-- jitterring during training (for robotics application)
-
+One last limitation of RL is the instability of training. That is to say, you can observe during training a huge drop in performance.
+For instance, this behavior is particularly present in `DDPG`, that's why its extension `TD3` tries to tackle that issue.
+Other method, like `TRPO` or `PPO` make use of a *trust region* to solve this problem.
 
 
 How to evaluate an RL algorithm?
@@ -69,6 +75,15 @@ Looking at the training curve (episode reward function of the timesteps) is a go
 
 We suggest you reading `Deep Reinforcement Learning that Matters <https://arxiv.org/abs/1709.06560>`_ for a good discussion about RL evaluation.
 
+
+.. RL for Robotics
+.. ---------------
+..
+.. discrete actions -> not really suited
+.. continuous actions -> jitterring, recommended to use a PD
+..
+.. `SAC and applications <https://arxiv.org/abs/1812.05905>`_
+.. `CEM-RL <https://openreview.net/forum?id=BkeU5j0ctQ>`_
 
 
 Which algorithm should I use?
