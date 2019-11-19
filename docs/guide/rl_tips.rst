@@ -154,10 +154,11 @@ Goal Environment
 If your environment follows the `GoalEnv` interface (cf `HER <her.html>`_), then you should use
 HER + (SAC/TD3/DDPG/DQN) dependending on the action space.
 
+
 .. note::
 
-	It seems that the number of workers is an important hyperparameters for experiments with HER.
-  Currently, only HER+DDPG supports multiprocessing using MPI.
+	It seems that the number of workers is an important hyperparameters for experiments with HER. Currently, only HER+DDPG supports multiprocessing using MPI.
+
 
 
 Tips and Tricks when creating a custom environment
