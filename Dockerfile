@@ -34,9 +34,9 @@ RUN \
     cd $CODE_DIR && \
     pip install --upgrade pip && \
     if [[ $USE_GPU == "True" ]]; then \
-        TENSORFLOW_PACKAGE="tensorflow-gpu==1.8.0"; \
+        TENSORFLOW_PACKAGE="tensorflow-gpu"; \
     else \
-        TENSORFLOW_PACKAGE="tensorflow==1.8.0"; \
+        TENSORFLOW_PACKAGE="tensorflow"; \
     fi; \
     pip install ${TENSORFLOW_PACKAGE} && \
     pip install -e .[mpi,tests] && \
