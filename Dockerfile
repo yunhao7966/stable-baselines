@@ -1,5 +1,5 @@
 ARG PARENT_IMAGE
-ARG TENSORFLOW_PACKAGE
+ARG USE_GPU
 FROM $PARENT_IMAGE
 
 RUN apt-get -y update \
@@ -33,6 +33,11 @@ RUN \
     . $VENV/bin/activate && \
     cd $CODE_DIR && \
     pip install --upgrade pip && \
+    if [[ $USE_GPU == "True" ]]; then \
+        TENSORFLOW_PACKAGE="tensorflow-gpu"; \
+    else \
+        TENSORFLOW_PACKAGE="tensorflow"; \
+    fi; \
     pip install ${TENSORFLOW_PACKAGE} && \
     pip install -e .[mpi,tests] && \
     pip install codacy-coverage && \
