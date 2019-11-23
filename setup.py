@@ -116,7 +116,8 @@ setup(name='stable_baselines',
           'opencv-python',
           'numpy',
           'pandas',
-          'matplotlib'
+          'matplotlib',
+          'tensorflow-probability>=0.8.0'
       ] + tf_dependency,
       extras_require={
         'mpi': [

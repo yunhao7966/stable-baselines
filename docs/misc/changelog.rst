@@ -12,7 +12,8 @@ Pre-Release 3.0.0a0 (WIP)
 
 Breaking Changes:
 ^^^^^^^^^^^^^^^^^
-- Drop support for tensorflow 1.x
+- Drop support for tensorflow 1.x, TensorFlow >=2.0.0 is required
+- New dependency: tensorflow-probability>=0.8.0 is now required
 
 New Features:
 ^^^^^^^^^^^^^

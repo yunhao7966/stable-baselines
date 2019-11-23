@@ -6,23 +6,24 @@ import zipfile
 import pytest
 import numpy as np
 
-from stable_baselines import A2C, ACER, ACKTR, DQN, PPO1, PPO2, TRPO
+# from stable_baselines import A2C, ACER, ACKTR, DQN, PPO1, PPO2, TRPO
 from stable_baselines.common import set_global_seeds
 from stable_baselines.common.identity_env import IdentityEnv
 from stable_baselines.common.vec_env import DummyVecEnv
-from stable_baselines.common.policies import MlpPolicy, FeedForwardPolicy
+# from stable_baselines.common.policies import MlpPolicy, FeedForwardPolicy
 
 N_TRIALS = 2000
 
-MODEL_LIST = [
-    A2C,
-    ACER,
-    ACKTR,
-    DQN,
-    PPO1,
-    PPO2,
-    TRPO,
-]
+# MODEL_LIST = [
+#     A2C,
+#     ACER,
+#     ACKTR,
+#     DQN,
+#     PPO1,
+#     PPO2,
+#     TRPO,
+# ]
+MODEL_LIST = []
 
 STORE_METHODS = [
     "path",
@@ -35,6 +36,7 @@ STORE_FORMAT = [
 ]
 
 @pytest.mark.slow
+@pytest.mark.skip(reason="Not supported yet, tf2 migration in progress")
 @pytest.mark.parametrize("model_class", MODEL_LIST)
 @pytest.mark.parametrize("storage_method", STORE_METHODS)
 @pytest.mark.parametrize("store_format", STORE_FORMAT)
@@ -44,11 +46,11 @@ def test_model_manipulation(request, model_class, storage_method, store_format):
     works and that the action prediction works
 
     :param model_class: (BaseRLModel) A RL model
-    :param storage_method: (str) Should file be saved to a file ("path") or to a buffer 
+    :param storage_method: (str) Should file be saved to a file ("path") or to a buffer
         ("file-like")
     :param store_format: (str) Save format, either "zip" or "cloudpickle".
     """
-    
+
     # Use postfix ".model" so we can remove the file later
     model_fname = './test_model_{}.model'.format(request.node.name)
     store_as_cloudpickle = store_format == "cloudpickle"
@@ -145,12 +147,12 @@ def test_model_manipulation(request, model_class, storage_method, store_format):
         if os.path.exists(model_fname):
             os.remove(model_fname)
 
-class CustomMlpPolicy(FeedForwardPolicy):
-    """A dummy "custom" policy to test out custom_objects"""
-    def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, reuse=False, **_kwargs):
-        super(CustomMlpPolicy, self).__init__(sess, ob_space, ac_space, n_env, n_steps,
-                                              n_batch, reuse, feature_extraction="mlp",
-                                              **_kwargs)
+# class CustomMlpPolicy(FeedForwardPolicy):
+#     """A dummy "custom" policy to test out custom_objects"""
+#     def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, reuse=False, **_kwargs):
+#         super(CustomMlpPolicy, self).__init__(sess, ob_space, ac_space, n_env, n_steps,
+#                                               n_batch, reuse, feature_extraction="mlp",
+#                                               **_kwargs)
 
 
 @pytest.mark.parametrize("model_class", MODEL_LIST)

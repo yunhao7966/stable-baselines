@@ -5,30 +5,31 @@ import gym
 import pytest
 import numpy as np
 
-from stable_baselines import A2C, ACKTR, SAC, DDPG, PPO1, PPO2, TRPO, TD3
+# from stable_baselines import A2C, ACKTR, SAC, DDPG, PPO1, PPO2, TRPO, TD3
 # TODO: add support for continuous actions
 # from stable_baselines.acer import ACER
 from stable_baselines.common import set_global_seeds
 from stable_baselines.common.vec_env import DummyVecEnv
 from stable_baselines.common.identity_env import IdentityEnvBox
-from stable_baselines.ddpg import AdaptiveParamNoiseSpec, NormalActionNoise
+from stable_baselines.common.noise import AdaptiveParamNoiseSpec, NormalActionNoise
 from tests.test_common import _assert_eq
 
 
 N_TRIALS = 1000
 NUM_TIMESTEPS = 15000
 
-MODEL_LIST = [
-    A2C,
-    # ACER,
-    ACKTR,
-    DDPG,
-    PPO1,
-    PPO2,
-    SAC,
-    TD3,
-    TRPO
-]
+# MODEL_LIST = [
+#     A2C,
+#     # ACER,
+#     ACKTR,
+#     DDPG,
+#     PPO1,
+#     PPO2,
+#     SAC,
+#     TD3,
+#     TRPO
+# ]
+MODEL_LIST = []
 
 
 @pytest.mark.slow
@@ -146,7 +147,7 @@ def test_model_manipulation(request, model_class):
         if os.path.exists("./test_model.zip"):
             os.remove("./test_model.zip")
 
-
+@pytest.mark.skip(reason="Not supported yet, tf2 migration in progress")
 def test_ddpg():
     args = ['--env-id', 'Pendulum-v0', '--num-timesteps', 1000, '--noise-type', 'ou_0.01']
     args = list(map(str, args))
@@ -154,6 +155,7 @@ def test_ddpg():
     _assert_eq(return_code, 0)
 
 
+@pytest.mark.skip(reason="Not supported yet, tf2 migration in progress")
 def test_ddpg_eval_env():
     """
     Additional test to check that everything is working when passing
@@ -166,6 +168,7 @@ def test_ddpg_eval_env():
     model.learn(1000)
 
 
+@pytest.mark.skip(reason="Not supported yet, tf2 migration in progress")
 def test_ddpg_normalization():
     """
     Test that observations and returns normalizations are properly saved and loaded.
@@ -193,6 +196,7 @@ def test_ddpg_normalization():
         os.remove("./test_ddpg.zip")
 
 
+@pytest.mark.skip(reason="Not supported yet, tf2 migration in progress")
 def test_ddpg_popart():
     """
     Test DDPG with pop-art normalization

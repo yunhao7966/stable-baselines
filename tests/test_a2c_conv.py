@@ -1,15 +1,17 @@
+import pytest
+
 import gym
 import numpy as np
 import tensorflow as tf
 
-from stable_baselines.a2c.utils import conv
-from stable_baselines.common.input import observation_input
+# from stable_baselines.a2c.utils import conv
+# from stable_baselines.common.input import observation_input
 
 
 ENV_ID = 'BreakoutNoFrameskip-v4'
 SEED = 3
 
-
+@pytest.mark.skip(reason="Not supported yet, tf2 migration in progress")
 def test_conv_kernel():
     """Test convolution kernel with various input formats."""
     filter_size_1 = 4   # The size of squared filter for the first layer

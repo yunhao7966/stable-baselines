@@ -1,5 +1,6 @@
 import subprocess
 
+import pytest
 import gym
 import numpy as np
 
@@ -15,6 +16,7 @@ def make_env():
     return gym.make(ENV_ID)
 
 
+@pytest.mark.skip(reason="Not supported yet, tf2 migration in progress")
 def test_runningmeanstd():
     """Test RunningMeanStd object"""
     for (x_1, x_2, x_3) in [
@@ -76,6 +78,7 @@ def test_vec_env(tmpdir):
     check_vec_norm_equal(norm_venv, deserialized)
 
 
+@pytest.mark.skip(reason="Not supported yet, tf2 migration in progress")
 def test_mpi_runningmeanstd():
     """Test RunningMeanStd object for MPI"""
     return_code = subprocess.call(['mpirun', '--allow-run-as-root', '-np', '2',

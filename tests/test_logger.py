@@ -24,7 +24,9 @@ def test_main():
     _demo()
 
 
-@pytest.mark.parametrize('_format', ['tensorboard', 'stdout', 'log', 'json', 'csv'])
+# @pytest.mark.parametrize('_format', ['tensorboard', 'stdout', 'log', 'json', 'csv'])
+@pytest.mark.parametrize('_format', ['stdout', 'log', 'json', 'csv'])
+# @pytest.mark.parametrize('mpi_disabled', [False, True])
 @pytest.mark.parametrize('mpi_disabled', [False, True])
 def test_make_output(_format, mpi_disabled):
     """

@@ -6,36 +6,36 @@ from gym import spaces
 import numpy as np
 import pytest
 
-from stable_baselines import A2C, ACER, ACKTR, PPO2, bench
-from stable_baselines.common.policies import MlpLstmPolicy, LstmPolicy
-from stable_baselines.common.vec_env import SubprocVecEnv
-from stable_baselines.common.vec_env.vec_normalize import VecNormalize
-from stable_baselines.ppo2.ppo2 import safe_mean
+# from stable_baselines import A2C, ACER, ACKTR, PPO2, bench
+# from stable_baselines.common.policies import MlpLstmPolicy, LstmPolicy
+# from stable_baselines.common.vec_env import SubprocVecEnv
+# from stable_baselines.common.vec_env.vec_normalize import VecNormalize
+# from stable_baselines.ppo2.ppo2 import safe_mean
 
 
-class CustomLSTMPolicy1(LstmPolicy):
-    def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm=128, reuse=False, **_kwargs):
-        super().__init__(sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm, reuse, net_arch=[8, 'lstm', 8],
-                         layer_norm=False, feature_extraction="mlp", **_kwargs)
-
-
-class CustomLSTMPolicy2(LstmPolicy):
-    def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm=64, reuse=False, **_kwargs):
-        super().__init__(sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm, reuse,
-                         net_arch=['lstm', 8], layer_norm=True, feature_extraction="mlp", **_kwargs)
-
-
-class CustomLSTMPolicy3(LstmPolicy):
-    def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm=64, reuse=False, **_kwargs):
-        super().__init__(sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm, reuse,
-                         net_arch=[8, 'lstm'], layer_norm=False, feature_extraction="mlp", **_kwargs)
-
-
-class CustomLSTMPolicy4(LstmPolicy):
-    def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm=64, reuse=False, **_kwargs):
-        super().__init__(sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm, reuse,
-                         net_arch=[8, 'lstm', dict(vf=[5, 10], pi=[10])],
-                         layer_norm=True, feature_extraction="mlp", **_kwargs)
+# class CustomLSTMPolicy1(LstmPolicy):
+#     def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm=128, reuse=False, **_kwargs):
+#         super().__init__(sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm, reuse, net_arch=[8, 'lstm', 8],
+#                          layer_norm=False, feature_extraction="mlp", **_kwargs)
+#
+#
+# class CustomLSTMPolicy2(LstmPolicy):
+#     def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm=64, reuse=False, **_kwargs):
+#         super().__init__(sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm, reuse,
+#                          net_arch=['lstm', 8], layer_norm=True, feature_extraction="mlp", **_kwargs)
+#
+#
+# class CustomLSTMPolicy3(LstmPolicy):
+#     def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm=64, reuse=False, **_kwargs):
+#         super().__init__(sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm, reuse,
+#                          net_arch=[8, 'lstm'], layer_norm=False, feature_extraction="mlp", **_kwargs)
+#
+#
+# class CustomLSTMPolicy4(LstmPolicy):
+#     def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm=64, reuse=False, **_kwargs):
+#         super().__init__(sess, ob_space, ac_space, n_env, n_steps, n_batch, n_lstm, reuse,
+#                          net_arch=[8, 'lstm', dict(vf=[5, 10], pi=[10])],
+#                          layer_norm=True, feature_extraction="mlp", **_kwargs)
 
 
 class CartPoleNoVelEnv(CartPoleEnv):
@@ -67,8 +67,10 @@ N_TRIALS = 100
 NUM_ENVS = 16
 NUM_EPISODES_FOR_SCORE = 10
 
-MODELS = [A2C, ACER, ACKTR, PPO2]
-LSTM_POLICIES = [MlpLstmPolicy, CustomLSTMPolicy1, CustomLSTMPolicy2, CustomLSTMPolicy3, CustomLSTMPolicy4]
+# MODELS = [A2C, ACER, ACKTR, PPO2]
+# LSTM_POLICIES = [MlpLstmPolicy, CustomLSTMPolicy1, CustomLSTMPolicy2, CustomLSTMPolicy3, CustomLSTMPolicy4]
+MODELS = []
+LSTM_POLICIES = []
 
 
 @pytest.mark.parametrize("model_class", MODELS)
