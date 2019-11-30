@@ -27,6 +27,7 @@ New Features:
 - Add parameter `exploration_initial_eps` to DQN. (@jdossgollin)
 - Add type checking and PEP 561 compliance.
   Note: most functions are still not annotated, this will be a gradual process.
+- DDPG, TD3 and SAC accept non-symmetric action spaces. (@Antymon)
 
 Bug Fixes:
 ^^^^^^^^^^
@@ -34,6 +35,7 @@ Bug Fixes:
 - Fix a bug in DDPG where `predict` method with `deterministic=False` would fail
 - Fix a bug in TRPO: mean_losses was not initialized causing the logger to crash when there was no gradients (@MarvineGothic)
 - Fix a bug in `cmd_util` from API change in recent Gym versions
+- Fix a bug in DDPG, TD3 and SAC where warmup and random exploration actions would end up scaled in the replay buffer (@Antymon)
 
 Deprecations:
 ^^^^^^^^^^^^^
@@ -46,6 +48,7 @@ Others:
 - Add upper bound for Tensorflow version (<2.0.0).
 - Refactored test to remove duplicated code
 - Add pull request template
+- Replaced redundant code in load_results (@jbulow)
 
 Documentation:
 ^^^^^^^^^^^^^^
@@ -62,6 +65,9 @@ Documentation:
 - Add JNRR19 tutorial (by @edbeeching, @hill-a and @araffin)
 - Updated notebooks link
 - Fix typo in algos.rst, "containes" to "contains" (@SyllogismRXS)
+- Fix outdated source documentation for load_results
+- Add PPO_CPP project (@Antymon)
+- Add section on C++ portability of Tensorflow models (@Antymon)
 
 Release 2.8.0 (2019-09-29)
 --------------------------
@@ -542,4 +548,4 @@ Thanks to @bjmuld @iambenzo @iandanforth @r7vme @brendenpetersen @huvar @abhiskk
 @EliasHasle @mrakgr @Bleyddyn @antoine-galataud @junhyeokahn @AdamGleave @keshaviyengar @tperol
 @XMaster96 @kantneel @Pastafarianist @GerardMaggiolino @PatrickWalter214 @yutingsz @sc420 @Aaahh @billtubbs
 @Miffyli @dwiel @miguelrass @qxcv @jaberkow @eavelardev @ruifeng96150 @pedrohbtp @srivatsankrishnan @evilsocket
-@MarvineGothic @jdossgollin @SyllogismRXS @rusu24edward @edbeeching
+@MarvineGothic @jdossgollin @SyllogismRXS @rusu24edward @jbulow @Antymon @edbeeching
