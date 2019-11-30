@@ -23,23 +23,25 @@ TL;DR
 
 Like any other subject, if you want to work with RL, you should first read about it (we have a `ressource page <rl.html>`_ to get you started)
 to understand what you are using. We also recommend you to read Stable Baselines (SB) documentation and do the `tutorial <https://github.com/araffin/rl-tutorial-jnrr19>`_.
-It covers basic usage and guide you towards more advanced concepts of the library.
+It covers basic usage and guide you towards more advanced concepts of the library (e.g. callbacks and wrappers).
 
 Reinforcement Learning differs from other machine learning methods in different manners. The data used to train the agent is collected
 through interactions with the environment by the agent itself (compared to supervised learning where you have a fixed dataset for instance).
 This dependence can lead to vicious circle: if the agent collects poor quality data (e.g., trajectories with no rewards), then it will not improve and continue to amass
 bad trajectories.
 
-This factor, among others, explains that results in RL may vary from one run to another (i.e., only the seed of the pseudo-random generator changes).
-That's why you should always do several runs to have quantitative results.
+This factor, among others, explains that results in RL may vary from one run to another (i.e., when only the seed of the pseudo-random generator changes).
+For this reason, you should always do several runs to have quantitative results.
 
 Good results in RL are usually dependent on finding appropriate hyperparameters. Recent alogrithms (PPO, SAC, TD3) normally require little hyperparameter tuning,
-but *don't expect the default ones to work* on any environment.
+however, *don't expect the default ones to work* on any environment.
 
 We highly recommend you to take a look at the `RL zoo <https://github.com/araffin/rl-baselines-zoo>`_ (or the original papers) for tuned hyperparameters.
 A best practice when you apply RL to a new problem is to do automatic hyperparameter optimization. Again, this is included in the `RL zoo <https://github.com/araffin/rl-baselines-zoo>`_.
 
-You should normalize you input (VecNormalize for PPO2/A2C) and look at commmon preprocessing (e.g. for Atari, frame-stack, ...)
+When applying RL to a custom problem, you should always normalize the input to the agent (e.g. using VecNormalize for PPO2/A2C)
+and look at common preprocessing done on other environments (e.g. for Atari, frame-stack, ...).
+Please refer to `Tips and Tricks when creating a custom environment` paragraph below for more advice related to custom environments.
 
 
 Current Limitations of RL
@@ -48,21 +50,22 @@ Current Limitations of RL
 You have to be aware of the current `limitations <https://www.alexirpan.com/2018/02/14/rl-hard.html>`_ of reinforcement learning.
 
 
-Model-free RL algorithms (i.e. all the algorithms implemented in SB) are usually *sample inefficient*. They require a lot of samples (sometimes millions) to learn something useful.
-That's why most of the successes in RL were achieved on games or in simulation only. For instance, in this `work <https://www.youtube.com/watch?v=aTDkYFZFWug>`_ by ETH Zurich, the ANYmal robot was trained in simulation only before being tested in the real world.
+Model-free RL algorithms (i.e. all the algorithms implemented in SB) are usually *sample inefficient*. They require a lot of samples (sometimes millions of interactions) to learn something useful.
+That's why most of the successes in RL were achieved on games or in simulation only. For instance, in this `work <https://www.youtube.com/watch?v=aTDkYFZFWug>`_ by ETH Zurich, the ANYmal robot was trained in simulation only, and then tested in the real world.
 
 As a general advice, to obtain better performances, you should augment the budget of the agent (number of training timesteps).
+
 How to make them more sample efficient? informative (shaped) reward, SRL, initialize with imitation learning,
 reduce the number of parameters (e.g. reduce the observation space, action space by constraining it).
 
 
 In order to to achieved a desired behavior, expert knowledge is often required to design an adequate reward function.
 This *reward engineering* (or *RewArt* as coined by `Freek Stulp <http://www.freekstulp.net/>`_), necessitates several iterations. As a good example of reward shaping,
-you can take a look at `Deep Mimic <https://xbpeng.github.io/projects/DeepMimic/index.html>`_ which combines imitation learning and reinforcement learning to learn acrobatic moves.
+you can take a look at `Deep Mimic paper <https://xbpeng.github.io/projects/DeepMimic/index.html>`_ which combines imitation learning and reinforcement learning to do acrobatic moves.
 
 One last limitation of RL is the instability of training. That is to say, you can observe during training a huge drop in performance.
-For instance, this behavior is particularly present in `DDPG`, that's why its extension `TD3` tries to tackle that issue.
-Other method, like `TRPO` or `PPO` make use of a *trust region* to solve this problem by avoiding too large update.
+This behavior is particularly present in `DDPG`, that's why its extension `TD3` tries to tackle that issue.
+Other method, like `TRPO` or `PPO` make use of a *trust region* to minimize that problem by avoiding too large update.
 
 
 How to evaluate an RL algorithm?
@@ -152,12 +155,12 @@ Goal Environment
 -----------------
 
 If your environment follows the `GoalEnv` interface (cf `HER <her.html>`_), then you should use
-HER + (SAC/TD3/DDPG/DQN) dependending on the action space.
+HER + (SAC/TD3/DDPG/DQN) depending on the action space.
 
 
 .. note::
 
-	It seems that the number of workers is an important hyperparameters for experiments with HER. Currently, only HER+DDPG supports multiprocessing using MPI.
+	The number of workers is an important hyperparameters for experiments with HER. Currently, only HER+DDPG supports multiprocessing using MPI.
 
 
 
@@ -173,8 +176,8 @@ Some basic advice:
 - always normalize your observation space when you can (when you know the boundaries)
 - normalize your action space and make it symmetric when continuous (cf potential issue below)
 	A good practice is to rescale your actions to lie in [-1, 1].
-	This does not limit your as you can easily rescale the action inside the environment
-- start with shaped reward (i.e. informative reward) and simplified problem
+	This does not limit you as you can easily rescale the action inside the environment
+- start with shaped reward (i.e. informative reward) and simplified version of your problem
 - debug with random actions to check that your environment works and follows the gym interface:
 
 
@@ -192,6 +195,9 @@ Here is a code snippet to check that your environment runs without error.
 
 
 Why should I normalize the action space?
+
+Issue: https://github.com/hill-a/stable-baselines/issues/473
+Thread: https://twitter.com/araffin2/status/1111983313676312576
 
 TODO: link to issue and image
 
