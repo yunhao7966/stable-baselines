@@ -4,7 +4,7 @@
 Reinforcement Learning Tips and Tricks
 ======================================
 
-The aim of this section is to help you for doing reinforcement learning experiments.
+The aim of this section is to help you doing reinforcement learning experiments.
 It covers general advice about RL (where to start, which algorithm to choose, how to evaluate an algorithm, ...),
 as well as tips and tricks when using a custom environment or implementing an RL algorithm.
 
@@ -21,7 +21,7 @@ TL;DR
 4. For better performances, increase the training budget
 
 
-Like any other subject, if you want to work with RL, you should first read about it (we have a `ressource page <rl.html>`_ to get you started)
+Like any other subject, if you want to work with RL, you should first read about it (we have a dedicated `ressource page <rl.html>`_ to get you started)
 to understand what you are using. We also recommend you to read Stable Baselines (SB) documentation and do the `tutorial <https://github.com/araffin/rl-tutorial-jnrr19>`_.
 It covers basic usage and guide you towards more advanced concepts of the library (e.g. callbacks and wrappers).
 
@@ -33,15 +33,15 @@ bad trajectories.
 This factor, among others, explains that results in RL may vary from one run to another (i.e., when only the seed of the pseudo-random generator changes).
 For this reason, you should always do several runs to have quantitative results.
 
-Good results in RL are usually dependent on finding appropriate hyperparameters. Recent alogrithms (PPO, SAC, TD3) normally require little hyperparameter tuning,
+Good results in RL are generally dependent on finding appropriate hyperparameters. Recent alogrithms (PPO, SAC, TD3) normally require little hyperparameter tuning,
 however, *don't expect the default ones to work* on any environment.
 
-We highly recommend you to take a look at the `RL zoo <https://github.com/araffin/rl-baselines-zoo>`_ (or the original papers) for tuned hyperparameters.
+Therefore, we *highly recommend you* to take a look at the `RL zoo <https://github.com/araffin/rl-baselines-zoo>`_ (or the original papers) for tuned hyperparameters.
 A best practice when you apply RL to a new problem is to do automatic hyperparameter optimization. Again, this is included in the `RL zoo <https://github.com/araffin/rl-baselines-zoo>`_.
 
 When applying RL to a custom problem, you should always normalize the input to the agent (e.g. using VecNormalize for PPO2/A2C)
-and look at common preprocessing done on other environments (e.g. for Atari, frame-stack, ...).
-Please refer to `Tips and Tricks when creating a custom environment` paragraph below for more advice related to custom environments.
+and look at common preprocessing done on other environments (e.g. for `Atari <https://danieltakeshi.github.io/2016/11/25/frame-skipping-and-preprocessing-for-deep-q-networks-on-atari-2600-games/>`_, frame-stack, ...).
+Please refer to *Tips and Tricks when creating a custom environment* paragraph below for more advice related to custom environments.
 
 
 Current Limitations of RL
@@ -54,9 +54,6 @@ Model-free RL algorithms (i.e. all the algorithms implemented in SB) are usually
 That's why most of the successes in RL were achieved on games or in simulation only. For instance, in this `work <https://www.youtube.com/watch?v=aTDkYFZFWug>`_ by ETH Zurich, the ANYmal robot was trained in simulation only, and then tested in the real world.
 
 As a general advice, to obtain better performances, you should augment the budget of the agent (number of training timesteps).
-
-How to make them more sample efficient? informative (shaped) reward, SRL, initialize with imitation learning,
-reduce the number of parameters (e.g. reduce the observation space, action space by constraining it).
 
 
 In order to to achieved a desired behavior, expert knowledge is often required to design an adequate reward function.
@@ -71,31 +68,26 @@ Other method, like `TRPO` or `PPO` make use of a *trust region* to minimize that
 How to evaluate an RL algorithm?
 --------------------------------
 
-Evaluation methodology: use a test env, evaluate periodically the agent, and use deterministic agent to remove exploration noise.
-Looking at the training curve (episode reward function of the timesteps) is a good proxy but usually underestimate the agent true performance.
+Because most algorithms use exploration noise during training, you need a separate test environment to evaluate the performance
+of your agent at a given time. It is recommended to periodically evaluate your agent for `n` test episodes (`n` is usually between 5 and 20)
+and average the reward per episode to have a good estimate.
 
-`blog post <https://openlab-flowers.inria.fr/t/how-many-random-seeds-should-i-use-statistical-power-analysis-in-deep-reinforcement-learning-experiments/457>`_
+As some policy are stochastic by default (e.g. A2C or PPO), you should also try to set `deterministic=True` when calling the `.predict()` method,
+this frequently leads to better performance.
+Looking at the training curve (episode reward function of the timesteps) is a good proxy but underestimates the agent true performance.
 
-`issue <https://github.com/hill-a/stable-baselines/issues/199>`_
 
 We suggest you reading `Deep Reinforcement Learning that Matters <https://arxiv.org/abs/1709.06560>`_ for a good discussion about RL evaluation.
 
-
-.. RL for Robotics
-.. ---------------
-.. TODO: later
-.. discrete actions -> not really suited
-.. continuous actions -> jitterring, recommended to use a PD
-..
-.. `SAC and applications <https://arxiv.org/abs/1812.05905>`_
-.. `CEM-RL <https://openreview.net/forum?id=BkeU5j0ctQ>`_
+You can also take a look at this `blog post <https://openlab-flowers.inria.fr/t/how-many-random-seeds-should-i-use-statistical-power-analysis-in-deep-reinforcement-learning-experiments/457>`_
+and this `issue <https://github.com/hill-a/stable-baselines/issues/199>`_ by Cédric Colas.
 
 
 Which algorithm should I use?
 =============================
 
 There is no silver bullet in RL, depending on your needs and problem, you may choose one or the other.
-The first distinction comes from your action space, do you have discrete (e.g. LEFT, RIGHT, ...)
+The first distinction comes from your action space, i.e., do you have discrete (e.g. LEFT, RIGHT, ...)
 or continuous actions (ex: go to a certain speed)?
 
 Some algorithms are only tailored for one or the other domain: `DQN` only supports discrete actions, where `SAC` is restricted to continuous actions.
@@ -117,8 +109,8 @@ Discrete Actions
 Discrete Actions - Single Process
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-DQN with extensions (double DQN, prioritized replay, ...) and ACER are the recommended algorithm.
-DQN is usually slower to train (regarding wall clock time) but is the most sample efficient (because of its replay buffer)
+DQN with extensions (double DQN, prioritized replay, ...) and ACER are the recommended algorithms.
+DQN is usually slower to train (regarding wall clock time) but is the most sample efficient (because of its replay buffer).
 
 Discrete Actions - Multiprocessed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -169,14 +161,12 @@ Tips and Tricks when creating a custom environment
 
 If you want to learn about how to create a custom environment, we recommend you to read this `page <custom_envs.html>`_.
 We also provide a `colab notebook <https://colab.research.google.com/github/araffin/rl-tutorial-jnrr19/blob/master/5_custom_gym_env.ipynb>`_ for
-a concrete example of creating a custom environment.
+a concrete example of creating a custom gym environment.
 
 Some basic advice:
 
-- always normalize your observation space when you can (when you know the boundaries)
-- normalize your action space and make it symmetric when continuous (cf potential issue below)
-	A good practice is to rescale your actions to lie in [-1, 1].
-	This does not limit you as you can easily rescale the action inside the environment
+- always normalize your observation space when you can, i.e., when you know the boundaries
+- normalize your action space and make it symmetric when continuous (cf potential issue below) A good practice is to rescale your actions to lie in [-1, 1]. This does not limit you as you can easily rescale the action inside the environment
 - start with shaped reward (i.e. informative reward) and simplified version of your problem
 - debug with random actions to check that your environment works and follows the gym interface:
 
@@ -189,25 +179,60 @@ Here is a code snippet to check that your environment runs without error.
 	obs = env.reset()
 	n_steps = 10
 	for _ in range(n_steps):
-		# Random action
-		env = env.action_space.sample()
-		obs, reward, done, info = env.step(action)
+	    # Random action
+	    env = env.action_space.sample()
+	    obs, reward, done, info = env.step(action)
 
 
-Why should I normalize the action space?
+**Why should I normalize the action space?**
 
-Issue: https://github.com/hill-a/stable-baselines/issues/473
-Thread: https://twitter.com/araffin2/status/1111983313676312576
 
-TODO: link to issue and image
+Most reinforcement learning algorithms rely on a Gaussian distribution (initially centered at 0 with std 1) for continuous actions.
+So, if you forget to normalize the action space when using a custom environment,
+this can harm learning and be difficult to debug (cf attached image and `issue #473 <https://github.com/hill-a/stable-baselines/issues/473>`_).
+
+.. figure:: ../_static/img/mistake.png
+
+
+Another consequence of using a Gaussian is that the action range is not bounded.
+That's why clipping is usually used as a bandage to stay in a valid interval.
+A better solution would be to use a squashing function (cf `SAC`) or a Beta distribution (cf `issue #112 <https://github.com/hill-a/stable-baselines/issues/112>`_).
+
+.. note::
+
+	This statement is not true for `DDPG` or `TD3` because they don't rely on any probability distribution.
+
 
 
 Tips and Tricks when implementing an RL algorithm
 =================================================
 
-- read the paper several times
-- read online implementation (if available)
-- careful with the shapes (e.g. broadcast value fn) and the gradient
+When you try to reproduce a RL paper by implementing the algorithm, `nuts and bolts of RL research <http://joschu.net/docs/nuts-and-bolts.pdf>`_ by John Schulman are quite useful.
+
+We recommend following those steps to have a working RL algorithm:
+
+1. Read the original paper several times
+2. Read existing implementations (if available)
+3. Try to have some "sign of life" on toy problems
+4. Validate the implementation by making it run on harder and harder envs (you can compare results against the RL zoo)
+
+You need to be particularly careful on the shape of the different objects you are manipulating (a broadcast mistake will fail silently cf `issue #75 <https://github.com/hill-a/stable-baselines/pull/76>`_)
+and when to stop the gradient propagation.
+
+A personal pick (by @araffin) for environments with gradual difficulty in RL with continuous actions:
+
+1. Pendulum (easy to solve)
+2. HalfCheetahBullet (medium difficulty with local minima and shaped reward)
+3. BipedalWalkerHardcore (if it works on that one, then you can have a cookie)
+
+in RL with discrete actions:
+
+1. CartPole-v1 (easy to be better than random agent, harder to achieve maximal performance)
+2. LunarLander
+3. Pong (one of the easiest Atari game)
+4. other Atari games (e.g. Breakout)
+
+
 - tools to debug: explained variance
 - first sign of life on a simple problem then try harder and harder (usually need hyperparameter tuning)
 - what to monitor: entropy (exploration/exploitation), log std, stability (reduce learning rate, linear schedule)
