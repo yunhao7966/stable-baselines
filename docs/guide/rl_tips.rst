@@ -180,7 +180,7 @@ Here is a code snippet to check that your environment runs without error.
 	n_steps = 10
 	for _ in range(n_steps):
 	    # Random action
-	    env = env.action_space.sample()
+	    action = env.action_space.sample()
 	    obs, reward, done, info = env.step(action)
 
 
@@ -207,14 +207,16 @@ A better solution would be to use a squashing function (cf `SAC`) or a Beta dist
 Tips and Tricks when implementing an RL algorithm
 =================================================
 
-When you try to reproduce a RL paper by implementing the algorithm, `nuts and bolts of RL research <http://joschu.net/docs/nuts-and-bolts.pdf>`_ by John Schulman are quite useful.
+When you try to reproduce a RL paper by implementing the algorithm, the `nuts and bolts of RL research <http://joschu.net/docs/nuts-and-bolts.pdf>`_
+by John Schulman are quite useful (`video <https://www.youtube.com/watch?v=8EcdaCk9KaQ>`_).
 
-We recommend following those steps to have a working RL algorithm:
+We *recommend following those steps to have a working RL algorithm*:
 
 1. Read the original paper several times
 2. Read existing implementations (if available)
 3. Try to have some "sign of life" on toy problems
 4. Validate the implementation by making it run on harder and harder envs (you can compare results against the RL zoo)
+	You usually need to run hyperparameter optimization for that step.
 
 You need to be particularly careful on the shape of the different objects you are manipulating (a broadcast mistake will fail silently cf `issue #75 <https://github.com/hill-a/stable-baselines/pull/76>`_)
 and when to stop the gradient propagation.
@@ -231,11 +233,3 @@ in RL with discrete actions:
 2. LunarLander
 3. Pong (one of the easiest Atari game)
 4. other Atari games (e.g. Breakout)
-
-
-- tools to debug: explained variance
-- first sign of life on a simple problem then try harder and harder (usually need hyperparameter tuning)
-- what to monitor: entropy (exploration/exploitation), log std, stability (reduce learning rate, linear schedule)
-  exploration pb: augment the noise/ entropy coefficient
-
-what not to monitor: actor loss
