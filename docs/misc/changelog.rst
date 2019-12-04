@@ -71,6 +71,8 @@ Documentation:
 - Add section on C++ portability of Tensorflow models (@Antymon)
 - Update custom env documentation to reflect new gym API for the `close()` method (@justinkterry)
 - Update custom env documentation to clarify what step and reset return (@justinkterry)
+- Add RL tips and tricks for doing RL experiments
+
 
 Release 2.8.0 (2019-09-29)
 --------------------------
