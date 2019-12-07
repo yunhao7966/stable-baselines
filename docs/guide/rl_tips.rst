@@ -22,7 +22,7 @@ TL;DR
 
 
 Like any other subject, if you want to work with RL, you should first read about it (we have a dedicated `ressource page <rl.html>`_ to get you started)
-to understand what you are using. We also recommend you to read Stable Baselines (SB) documentation and do the `tutorial <https://github.com/araffin/rl-tutorial-jnrr19>`_.
+to understand what you are using. We also recommend you read Stable Baselines (SB) documentation and do the `tutorial <https://github.com/araffin/rl-tutorial-jnrr19>`_.
 It covers basic usage and guide you towards more advanced concepts of the library (e.g. callbacks and wrappers).
 
 Reinforcement Learning differs from other machine learning methods in different manners. The data used to train the agent is collected
