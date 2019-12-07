@@ -25,7 +25,7 @@ Like any other subject, if you want to work with RL, you should first read about
 to understand what you are using. We also recommend you read Stable Baselines (SB) documentation and do the `tutorial <https://github.com/araffin/rl-tutorial-jnrr19>`_.
 It covers basic usage and guide you towards more advanced concepts of the library (e.g. callbacks and wrappers).
 
-Reinforcement Learning differs from other machine learning methods in different manners. The data used to train the agent is collected
+Reinforcement Learning differs from other machine learning methods in several ways. The data used to train the agent is collected
 through interactions with the environment by the agent itself (compared to supervised learning where you have a fixed dataset for instance).
 This dependence can lead to vicious circle: if the agent collects poor quality data (e.g., trajectories with no rewards), then it will not improve and continue to amass
 bad trajectories.
