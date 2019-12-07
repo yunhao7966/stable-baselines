@@ -18,7 +18,7 @@ TL;DR
 1. Read about RL and Stable Baselines
 2. Do quantitative experiments and hyperparameter tuning if needed
 3. Evaluate the performance using a separate test environment
-4. For better performances, increase the training budget
+4. For better performance, increase the training budget
 
 
 Like any other subject, if you want to work with RL, you should first read about it (we have a dedicated `ressource page <rl.html>`_ to get you started)
