@@ -159,7 +159,7 @@ HER + (SAC/TD3/DDPG/DQN) depending on the action space.
 Tips and Tricks when creating a custom environment
 ==================================================
 
-If you want to learn about how to create a custom environment, we recommend you to read this `page <custom_envs.html>`_.
+If you want to learn about how to create a custom environment, we recommend you read this `page <custom_envs.html>`_.
 We also provide a `colab notebook <https://colab.research.google.com/github/araffin/rl-tutorial-jnrr19/blob/master/5_custom_gym_env.ipynb>`_ for
 a concrete example of creating a custom gym environment.
 
