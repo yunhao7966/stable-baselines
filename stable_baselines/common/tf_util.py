@@ -80,7 +80,7 @@ def single_threaded_session(make_default=False, graph=None):
 
 def in_session(func):
     """
-    wrappes a function so that it is in a TensorFlow Session
+    Wraps a function so that it is in a TensorFlow Session
 
     :param func: (function) the function to wrap
     :return: (function)

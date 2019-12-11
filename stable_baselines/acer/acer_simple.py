@@ -75,7 +75,7 @@ class ACER(ActorCriticRLModel):
             Use `n_cpu_tf_sess` instead.
 
     :param q_coef: (float) The weight for the loss on the Q value
-    :param ent_coef: (float) The weight for the entropic loss
+    :param ent_coef: (float) The weight for the entropy loss
     :param max_grad_norm: (float) The clipping value for the maximum gradient
     :param learning_rate: (float) The initial learning rate for the RMS prop optimizer
     :param lr_schedule: (str) The type of scheduler for the learning rate update ('linear', 'constant',

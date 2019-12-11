@@ -128,7 +128,7 @@ def get_perturbed_actor_updates(actor, perturbed_actor, param_noise_stddev, verb
         if var in get_perturbable_vars(actor):
             if verbose >= 2:
                 logger.info('  {} <- {} + noise'.format(perturbed_var.name, var.name))
-            # Add gaussian noise to the parameter
+            # Add Gaussiannoise to the parameter
             updates.append(tf.assign(perturbed_var,
                                      var + tf.random_normal(tf.shape(var), mean=0., stddev=param_noise_stddev)))
         else:

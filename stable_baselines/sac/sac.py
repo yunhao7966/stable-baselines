@@ -250,7 +250,7 @@ class SAC(OffPolicyRLModel):
                     policy_kl_loss = tf.reduce_mean(self.ent_coef * logp_pi - qf1_pi)
 
                     # NOTE: in the original implementation, they have an additional
-                    # regularization loss for the gaussian parameters
+                    # regularization loss for the Gaussianparameters
                     # this is not used for now
                     # policy_loss = (policy_kl_loss + policy_regularization_loss)
                     policy_loss = policy_kl_loss
@@ -510,7 +510,7 @@ class SAC(OffPolicyRLModel):
             raise ValueError("Error: SAC does not have action probabilities.")
 
         warnings.warn("Even though SAC has a Gaussian policy, it cannot return a distribution as it "
-                      "is squashed by a tanh before being scaled and ouputed.")
+                      "is squashed by a tanh before being scaled and outputed.")
 
         return None
 
