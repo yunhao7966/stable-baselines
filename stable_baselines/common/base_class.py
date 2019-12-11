@@ -238,7 +238,7 @@ class BaseRLModel(ABC):
         """
         Return the placeholders needed for the pretraining:
         - obs_ph: observation placeholder
-        - actions_ph will be population with an action from the environement
+        - actions_ph will be population with an action from the environment
             (from the expert dataset)
         - deterministic_actions_ph: e.g., in the case of a Gaussianpolicy,
             the mean.

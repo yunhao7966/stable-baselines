@@ -93,7 +93,7 @@ or continuous actions (ex: go to a certain speed)?
 Some algorithms are only tailored for one or the other domain: `DQN` only supports discrete actions, where `SAC` is restricted to continuous actions.
 
 The second difference that will help you choose is whether you can parallelize your training or not, and how you can do it (with or without MPI?).
-If what matters is the wall clock training time, then you should lean towards `A2C` and its derivates (PPO, ACER, ACKTR, ...).
+If what matters is the wall clock training time, then you should lean towards `A2C` and its derivatives (PPO, ACER, ACKTR, ...).
 Take a look at the `Vectorized Environments <vec_envs.html>`_ to learn more about training with multiple workers.
 
 To sum it up:

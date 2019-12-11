@@ -481,7 +481,7 @@ def make_proba_dist_type(ac_space):
     return an instance of ProbabilityDistributionType for the correct type of action space
 
     :param ac_space: (Gym Space) the input action space
-    :return: (ProbabilityDistributionType) the approriate instance of a ProbabilityDistributionType
+    :return: (ProbabilityDistributionType) the appropriate instance of a ProbabilityDistributionType
     """
     if isinstance(ac_space, spaces.Box):
         assert len(ac_space.shape) == 1, "Error: the action space must be a vector"
