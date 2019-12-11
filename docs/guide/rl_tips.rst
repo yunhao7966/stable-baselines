@@ -146,7 +146,7 @@ If you can use MPI, then you can choose between PPO1, TRPO and DDPG.
 Goal Environment
 -----------------
 
-If your environment follows the `GoalEnv` interface (cf `HER <her.html>`_), then you should use
+If your environment follows the `GoalEnv` interface (cf `HER <../modules/her.html>`_), then you should use
 HER + (SAC/TD3/DDPG/DQN) depending on the action space.
 
 
