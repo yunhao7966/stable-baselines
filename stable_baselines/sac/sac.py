@@ -250,7 +250,7 @@ class SAC(OffPolicyRLModel):
                     policy_kl_loss = tf.reduce_mean(self.ent_coef * logp_pi - qf1_pi)
 
                     # NOTE: in the original implementation, they have an additional
-                    # regularization loss for the Gaussianparameters
+                    # regularization loss for the Gaussian parameters
                     # this is not used for now
                     # policy_loss = (policy_kl_loss + policy_regularization_loss)
                     policy_loss = policy_kl_loss

@@ -240,7 +240,7 @@ class BaseRLModel(ABC):
         - obs_ph: observation placeholder
         - actions_ph will be population with an action from the environment
             (from the expert dataset)
-        - deterministic_actions_ph: e.g., in the case of a Gaussianpolicy,
+        - deterministic_actions_ph: e.g., in the case of a Gaussian policy,
             the mean.
 
         :return: ((tf.placeholder)) (obs_ph, actions_ph, deterministic_actions_ph)
