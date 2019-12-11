@@ -17,7 +17,7 @@ class ProbabilityDistribution(object):
         """
         Return the direct probabilities
 
-        :return: ([float]) the probabilites
+        :return: ([float]) the probabilities
         """
         raise NotImplementedError
 
@@ -41,7 +41,7 @@ class ProbabilityDistribution(object):
 
     def kl(self, other):
         """
-        Calculates the Kullback-Leibler divergence from the given probabilty distribution
+        Calculates the Kullback-Leibler divergence from the given probability distribution
 
         :param other: ([float]) the distribution to compare with
         :return: (float) the KL divergence of the two distributions
@@ -58,7 +58,7 @@ class ProbabilityDistribution(object):
 
     def sample(self):
         """
-        returns a sample from the probabilty distribution
+        returns a sample from the probability distribution
 
         :return: (Tensorflow Tensor) the stochastic action
         """
@@ -103,8 +103,8 @@ class ProbabilityDistributionType(object):
 
         :param pi_latent_vector: ([float]) the latent pi values
         :param vf_latent_vector: ([float]) the latent vf values
-        :param init_scale: (float) the inital scale of the distribution
-        :param init_bias: (float) the inital bias of the distribution
+        :param init_scale: (float) the initial scale of the distribution
+        :param init_bias: (float) the initial bias of the distribution
         :return: (ProbabilityDistribution) the instance of the ProbabilityDistribution associated
         """
         raise NotImplementedError

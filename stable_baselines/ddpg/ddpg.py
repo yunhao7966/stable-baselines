@@ -870,7 +870,7 @@ class DDPG(OffPolicyRLModel):
                                 self.env.render()
 
                             # Randomly sample actions from a uniform distribution
-                            # with a probabilty self.random_exploration (used in HER + DDPG)
+                            # with a probability self.random_exploration (used in HER + DDPG)
                             if np.random.rand() < self.random_exploration:
                                 # actions sampled from action space are from range specific to the environment
                                 # but algorithm operates on tanh-squashed actions therefore simple scaling is used

@@ -235,7 +235,7 @@ class FeedForwardPolicy(SACPolicy):
         logp_pi = gaussian_likelihood(pi_, mu_, log_std)
         self.entropy = gaussian_entropy(log_std)
         # MISSING: reg params for log and mu
-        # Apply squashing and account for it in the probabilty
+        # Apply squashing and account for it in the probability
         deterministic_policy, policy, logp_pi = apply_squashing_func(mu_, pi_, logp_pi)
         self.policy = policy
         self.deterministic_policy = deterministic_policy
